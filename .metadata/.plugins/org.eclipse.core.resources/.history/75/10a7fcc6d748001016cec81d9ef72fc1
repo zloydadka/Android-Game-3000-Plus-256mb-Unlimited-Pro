@@ -1,0 +1,28 @@
+package com.superdeveloperz.supergame;
+
+import android.util.Log;
+import android.view.View;
+
+public class GameListener {
+
+	private final String[] words;
+	private int currentWord;
+
+	public GameListener(String[] words) {
+		this.words = words;
+		this.currentWord = 0;
+	}
+
+	public boolean isCorrect(TextObject textObject) {
+		if(currentWord >= words.length){
+			Log.e("GameListener", "GAME FINISHED");
+			return false;
+		}
+		if (words[currentWord].equals(textObject.word)) {
+			currentWord++;
+			return true;
+		}
+		return false;
+	}
+
+}

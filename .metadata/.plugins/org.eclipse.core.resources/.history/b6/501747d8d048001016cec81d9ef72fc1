@@ -1,0 +1,17 @@
+package com.superdeveloperz.supergame;
+
+import android.view.View;
+
+public class GameListener implements View.OnClickListener{
+
+	private final String[] words;
+
+	public GameListener(String[] words) {
+		this.words = words;
+	}
+	
+	public void onClick(View v) {
+		
+	}
+
+}

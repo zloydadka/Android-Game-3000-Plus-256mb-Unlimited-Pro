@@ -1,0 +1,21 @@
+package com.superdeveloperz.supergame;
+
+import java.util.ArrayList;
+import java.util.Collection;
+
+import android.graphics.Canvas;
+
+public class GameModel {
+	Collection<GameObject> gameObjects;
+
+	public GameModel() {
+		gameObjects = new ArrayList<GameObject>();
+	}
+	
+	public void drawModel(Canvas canvas){
+		Collection<GameObject> objects = gameObjects;
+		for (GameObject gameObject : objects) {
+			gameObject.draw(canvas);
+		}
+	}
+}

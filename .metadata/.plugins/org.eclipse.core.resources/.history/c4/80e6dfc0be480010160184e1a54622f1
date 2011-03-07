@@ -1,0 +1,11 @@
+package com.superdeveloperz.supergame;
+
+import java.util.ArrayList;
+import java.util.Collection;
+
+public class GameModel {
+	Collection<GameObject> gameObjects;
+	public GameModel() {
+		gameObjects = new ArrayList<GameObject>();
+}
+}

@@ -1,0 +1,48 @@
+package com.superdeveloperz.supergame;
+
+import java.util.ArrayList;
+import java.util.Collection;
+
+import android.graphics.Color;
+import android.util.Log;
+import android.view.View;
+
+public class GameListener {
+
+	private final String[] words;
+	public boolean isCompleted = false;
+	private int currentWord;
+	private Collection<TextObject> objs;
+
+	public GameListener(String[] words) {
+		this.words = words;
+		this.currentWord = 0;
+		objs = new ArrayList<TextObject>();
+	}
+
+	public void addtObject(TextObject obj){
+		objs.add(obj);
+	}
+	
+	public void isCorrect(TextObject textObject) {
+		if (words[currentWord].equals(textObject.text)) {
+			currentWord++;
+			textObject.setColor(Color.BLACK);
+		}else{
+			startAgain();
+		}
+		if(currentWord >= words.length){
+			Log.e("GameListener", "GAME FINISHED");
+//			startAgain();
+			isCompleted = true;
+		}
+	}
+	private void startAgain(){
+		Collection<TextObject> objs2 = objs;
+		for (TextObject textObject2 : objs2) {
+			textObject2.setColor(Color.RED);
+		}
+		currentWord = 0;
+	}
+
+}

@@ -1,0 +1,7 @@
+package com.superdeveloperz.supergame;
+
+import android.view.View;
+
+public class GameListener implements View.OnClickListener{
+
+}

@@ -1,0 +1,30 @@
+package com.superdeveloperz.supergame;
+
+import android.graphics.Canvas;
+import android.graphics.Point;
+import android.graphics.drawable.Drawable;
+import android.util.Log;
+
+public abstract class GameObject {
+//	private final Drawable d;
+	public Point pt;
+	public int w, h;
+
+	public void move(int i, int j) {
+		pt.x += i;
+		pt.y += j;
+		
+		d.setBounds(pt.x, pt.y, pt.x + w, pt.y + h);
+	}
+
+	public GameObject() {
+		Log.e("GameObject", "created");
+//		this.d = d;
+//		w = d.getIntrinsicWidth();
+//		h = d.getIntrinsicHeight();
+//		pt = new Point(20, 20);
+//		d.setBounds(pt.x, pt.y, pt.x + w, pt.y + h);
+	}
+
+	public abstract void draw(Canvas can);
+}

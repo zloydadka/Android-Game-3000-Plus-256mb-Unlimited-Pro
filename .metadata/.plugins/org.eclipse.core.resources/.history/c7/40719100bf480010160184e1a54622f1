@@ -1,0 +1,12 @@
+package com.superdeveloperz.supergame;
+
+import android.graphics.drawable.Drawable;
+
+public class TextObject extends GameObject{
+
+	public TextObject(Drawable d) {
+		super(d);
+		// TODO Auto-generated constructor stub
+	}
+
+}

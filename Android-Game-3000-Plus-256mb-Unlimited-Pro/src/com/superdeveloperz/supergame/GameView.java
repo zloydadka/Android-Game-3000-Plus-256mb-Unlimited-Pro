@@ -2,8 +2,11 @@ package com.superdeveloperz.supergame;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.view.View;
+import android.util.Log;
 
 public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 	GameManager gm;
@@ -25,15 +28,24 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 		// подписываемся на события Surface
 		mSurfaceHolder = getHolder();
 		mSurfaceHolder.addCallback(this);
-		
 		gm = new GameManager(mSurfaceHolder, context);
+		setOnTouchListener(gm.model);
 	}
 
 	public void surfaceChanged(SurfaceHolder holder, int format, int width,
 			int height) {
-		// TODO Auto-generated method stub
+		System.out.println("GameView.surfaceChanged() "+width+" "+height);
 		
 	}
+
+	
+//	@Override
+//	public boolean onTouchEvent(MotionEvent event) {
+//		Log.e("GameView", "onTouchEvent");
+//		return super.onTouchEvent(event);
+//	}
+	
+
 
 	public void surfaceCreated(SurfaceHolder holder) {
 		gm.setRunning(true);

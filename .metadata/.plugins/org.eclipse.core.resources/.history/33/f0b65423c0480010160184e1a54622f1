@@ -1,0 +1,45 @@
+package com.superdeveloperz.supergame;
+
+import android.content.Context;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Paint.Style;
+import android.graphics.Point;
+import android.graphics.Typeface;
+import android.view.View;
+
+public class TextObject extends GameObject implements View.OnClickListener{
+
+	private Paint fontPaint;
+	private final String text;
+	private static final String FONT_PATH = "KOMIKAZE.ttf";
+
+	public TextObject(Context context, Point pt, String text) {
+		super(pt);
+		this.text = text;
+		fontPaint = createFontPaint(context, 20);
+		// TODO
+		setListener(this);
+	}
+
+	private Paint createFontPaint(Context context, int xxx) {
+		Paint newPaint = new Paint();
+		newPaint.setTextSize(xxx);
+		newPaint.setStrokeWidth(1);
+		newPaint.setStyle(Style.FILL);
+		newPaint.setTextAlign(Paint.Align.CENTER);
+		newPaint.setColor(Color.BLUE);
+		newPaint.setAntiAlias(true);
+		Typeface tf = Typeface.createFromAsset(context.getAssets(), FONT_PATH);
+
+		newPaint.setTypeface(tf);
+		return newPaint;
+	}
+	@Override
+	public void draw(Canvas canvas) {
+		canvas.drawText(text, pt.x, pt.y, fontPaint);
+	}
+
+
+}

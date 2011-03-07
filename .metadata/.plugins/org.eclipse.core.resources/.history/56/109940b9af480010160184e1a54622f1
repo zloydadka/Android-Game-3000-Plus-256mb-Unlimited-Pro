@@ -1,0 +1,22 @@
+package com.superdeveloperz.supergame;
+
+import android.graphics.Canvas;
+import android.graphics.Point;
+import android.graphics.drawable.Drawable;
+
+public abstract class GameObject {
+	private final Drawable d;
+	private Point pt;
+	private int w, h;
+
+	public GameObject(Drawable d) {
+			this.d = d;
+			w = d.getIntrinsicWidth();
+			h = d.getIntrinsicHeight();
+			pt = new Point(20,20);
+		}
+	
+	public void  draw(Canvas can) {
+		d.draw(can);
+	}
+}

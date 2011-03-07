@@ -1,0 +1,19 @@
+package com.superdeveloperz.supergame;
+
+import android.graphics.Canvas;
+import android.graphics.Point;
+import android.graphics.drawable.Drawable;
+import android.util.Log;
+
+public abstract class GameObject {
+	public Point pt;
+	public int w, h;
+
+	public abstract void move(int i, int j);
+
+	public GameObject() {
+		Log.e("GameObject", "created");
+	}
+
+	public abstract void draw(Canvas can);
+}

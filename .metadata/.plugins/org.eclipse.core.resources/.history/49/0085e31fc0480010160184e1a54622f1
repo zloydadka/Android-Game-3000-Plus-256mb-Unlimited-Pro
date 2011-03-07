@@ -1,0 +1,14 @@
+package com.superdeveloperz.supergame;
+
+import android.graphics.drawable.Drawable;
+import android.view.View;
+
+public class Pizdarik extends GameObject implements View.OnClickListener {
+
+	public Pizdarik(Drawable d) {
+		super(d);
+		// TODO Auto-generated constructor stub
+	}
+
+
+}

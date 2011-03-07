@@ -1,0 +1,70 @@
+package com.superdeveloperz.supergame;
+
+import android.content.Context;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.PointF;
+import android.graphics.Paint.Style;
+import android.graphics.Point;
+import android.graphics.Typeface;
+import android.util.Log;
+import android.view.View;
+
+public class TextObject extends GameObject implements View.OnClickListener {
+
+	int curColor;
+	private Paint fontPaint;
+	private final String text;
+	private static final String FONT_PATH = "KOMIKAZE.ttf";
+
+	public TextObject(Context context, PointF pt, String text) {
+		super(pt);
+		this.text = text;
+		curColor = Color.RED;
+		fontPaint = createFontPaint(context, 20);
+		// TODO
+		setListener(this);
+	}
+
+	private Paint createFontPaint(Context context, int fontSize) {
+		Paint newPaint = new Paint();
+		newPaint.setTextSize(fontSize);
+		newPaint.setStrokeWidth(1);
+		newPaint.setStyle(Style.FILL);
+		newPaint.setTextAlign(Paint.Align.LEFT);
+		newPaint.setColor(curColor);
+		newPaint.setAntiAlias(true);
+		Typeface tf = Typeface.createFromAsset(context.getAssets(), FONT_PATH);
+
+		newPaint.setTypeface(tf);
+		return newPaint;
+	}
+
+	@Override
+	public void draw(Canvas canvas) {
+		
+		canvas.drawText(text, pt.x, pt.y, fontPaint);
+	}
+	@Override
+	public void onClick(View v) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+//	@Override
+//	public void onClick(View arg0) {
+//		Log.e("TextObject","onClick");
+//		switchColor();
+//	}
+
+	private void switchColor() {
+		if (curColor == Color.RED)
+			curColor = Color.BLUE;
+		else
+			curColor = Color.RED;
+		fontPaint.setColor(curColor);
+
+	}
+
+}

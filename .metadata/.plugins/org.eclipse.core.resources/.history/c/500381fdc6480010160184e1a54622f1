@@ -1,0 +1,50 @@
+package com.superdeveloperz.supergame;
+
+import java.util.ArrayList;
+import java.util.Collection;
+
+import android.graphics.Canvas;
+import android.util.Log;
+import android.view.MotionEvent;
+import android.view.View;
+
+public class GameModel implements View.OnTouchListener{
+	Collection<GameObject> gameObjects;
+
+	public GameModel() {
+		gameObjects = new ArrayList<GameObject>();
+	}
+
+	public void drawModel(Canvas canvas) {
+		clearCanvas();
+		Collection<GameObject> objects = gameObjects;
+		for (GameObject gameObject : objects) {
+			gameObject.draw(canvas);
+		}
+	}
+
+	public void addGameObject(GameObject object) {
+		gameObjects.add(object);
+	}
+
+	private void clearCanvas() {
+		// TODO Auto-generated method stub
+	}
+
+	public void onClick(View v) {
+		
+		Log.e("GameModel", "onClick");
+		Collection<GameObject> objects = gameObjects;
+		for (GameObject gameObject : objects) {
+			gameObject.getListener().onClick(v);
+		}
+	}
+
+	public boolean onTouch(View view, MotionEvent event) {
+		Collection<GameObject> objects = gameObjects;
+		for (GameObject gameObject : objects) {
+			gameObject.getListener().onClick(v);
+		}
+		return true;
+	}
+}

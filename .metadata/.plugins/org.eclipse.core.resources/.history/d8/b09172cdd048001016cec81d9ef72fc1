@@ -1,0 +1,15 @@
+package com.superdeveloperz.supergame;
+
+import android.view.View;
+
+public class GameListener implements View.OnClickListener{
+
+	public GameListener() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	public void onClick(View v) {
+		
+	}
+
+}

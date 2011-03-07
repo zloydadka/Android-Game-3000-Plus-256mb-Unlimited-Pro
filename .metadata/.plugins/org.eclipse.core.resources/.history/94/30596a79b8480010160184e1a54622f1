@@ -1,0 +1,16 @@
+package com.superdeveloperz.supergame;
+
+import android.graphics.drawable.Drawable;
+
+public class Pizdarik extends GameObject {
+
+	public Pizdarik(Drawable d) {
+		super(d);
+		// TODO Auto-generated constructor stub
+	}
+
+	public void move(int i, int j) {
+		
+	}
+
+}

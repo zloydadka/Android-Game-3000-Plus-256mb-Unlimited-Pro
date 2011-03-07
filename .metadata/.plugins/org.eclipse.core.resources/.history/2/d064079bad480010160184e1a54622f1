@@ -1,0 +1,15 @@
+package com.superdeveloperz.supergame;
+
+import android.graphics.Point;
+import android.graphics.drawable.Drawable;
+
+public abstract class GameObject {
+		int h, w;
+		private final Drawable d;
+		
+		public GameObject(Drawable d) {
+			this.d = d;
+			// TODO Auto-generated constructor stub
+			Point pt;
+		}
+}

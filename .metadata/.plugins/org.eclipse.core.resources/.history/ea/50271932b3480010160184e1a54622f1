@@ -1,0 +1,110 @@
+package com.superdeveloperz.supergame;
+
+import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Paint.Style;
+import android.graphics.Rect;
+import android.util.Log;
+import android.view.MotionEvent;
+import android.view.SurfaceHolder;
+
+public class GameManager extends Thread
+{
+    private static final int FIELD_WIDTH = 300;
+    private static final int FIELD_HEIGHT = 250;
+
+   /** Область, на которой будем рисовать */
+    private SurfaceHolder mSurfaceHolder;
+
+    /** Состояние потока (выполняется или нет. Нужно, чтобы было удобнее прибивать поток, когда потребуется) */
+    private boolean mRunning;
+
+    /** Стили рисования */
+    private Paint mPaint;
+
+    /** Прямоугольник игрового поля */
+    private Rect mField;
+    private Pizdarik pizdarik;
+
+	public void collide(MotionEvent event) {
+		Log.d("GameManager", "collide");
+		float rawX = event.getRawX();
+		float rawY = event.getRawY();
+		Log.d("GameManager", "collide rawX = "+rawX +" rawY = "+rawY);
+		if(rawX > pizdarik.pt.x && rawX < (pizdarik.pt.x + pizdarik.w)){
+			if(rawY > pizdarik.pt.y && rawY < (pizdarik.pt.y + pizdarik.h)){
+				mRunning = false;
+			}
+		}
+	}
+    
+    /**
+     * Конструктор
+     * @param surfaceHolder Область рисования
+     * @param context Контекст приложения
+     */
+    public GameManager(SurfaceHolder surfaceHolder, Context context)
+    {
+        mSurfaceHolder = surfaceHolder;
+        mRunning = false;
+
+        mPaint = new Paint();
+        mPaint.setColor(Color.BLUE);
+        mPaint.setStrokeWidth(2);
+        mPaint.setStyle(Style.STROKE);
+        mField = new Rect();
+        Resources res = context.getResources();
+        
+        
+        pizdarik = new Pizdarik(res.getDrawable(R.drawable.icon));
+    }
+
+    /**
+     * Задание состояния потока
+     * @param running
+     */
+    public void setRunning(boolean running)
+    {
+        mRunning = running;
+    }
+    
+    public void initPositions(int screenHeight, int screenWidth)
+    {
+        int left = (screenWidth - FIELD_WIDTH) / 2;
+        int top = (screenHeight - FIELD_HEIGHT) / 2;
+
+        mField.set(left, top, left + FIELD_WIDTH, top + FIELD_HEIGHT);
+    }
+
+    @Override
+    /** Действия, выполняемые в потоке */
+    public void run()
+    {
+        while (mRunning)
+        {
+            Canvas canvas = null;
+            try
+            {
+                // подготовка Canvas-а
+                canvas = mSurfaceHolder.lockCanvas();
+                synchronized (mSurfaceHolder)
+                {
+                    // собственно рисование
+                    canvas.drawRect(mField, mPaint);
+                    pizdarik.draw(canvas);
+                }
+            }
+            catch (Exception e) { }
+            finally
+            {
+                if (canvas != null)
+                {
+                    mSurfaceHolder.unlockCanvasAndPost(canvas);
+                }
+            }
+        }
+    }
+}

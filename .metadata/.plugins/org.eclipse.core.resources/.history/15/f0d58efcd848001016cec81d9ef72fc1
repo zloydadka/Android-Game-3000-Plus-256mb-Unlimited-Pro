@@ -1,0 +1,75 @@
+package com.superdeveloperz.supergame;
+
+import android.content.Context;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.PaintFlagsDrawFilter;
+import android.graphics.PointF;
+import android.graphics.Paint.Style;
+import android.graphics.Point;
+import android.graphics.Rect;
+import android.graphics.Typeface;
+import android.util.Log;
+import android.view.View;
+
+public class TextObject extends GameObject implements View.OnClickListener {
+
+	int curColor;
+	private Paint fontPaint;
+	public final String text;
+	private static final String FONT_PATH = "KOMIKAZE.ttf";
+	private final GameListener gameListener;
+
+	public TextObject(Context context, GameListener gameListener, Point pt,
+			String text) {
+		super(pt);
+		this.gameListener = gameListener;
+		this.text = text;
+		curColor = Color.RED;
+		fontPaint = createFontPaint(context, 20);
+		fontPaint.getTextBounds(text, 0, text.length(), bounds);
+		bounds.set(bounds.left + pt.x, bounds.top + pt.y, bounds.right + pt.x,
+				bounds.bottom + pt.y);
+		// TODO
+		// bounds.offset(pt.x, pt.y);
+		setListener(this);
+	}
+
+	private Paint createFontPaint(Context context, int fontSize) {
+		Paint newPaint = new Paint();
+		newPaint.setTextSize(fontSize);
+		newPaint.setStrokeWidth(1);
+		newPaint.setStyle(Style.FILL);
+		newPaint.setTextAlign(Paint.Align.LEFT);
+		newPaint.setColor(curColor);
+		newPaint.setAntiAlias(true);
+		Typeface tf = Typeface.createFromAsset(context.getAssets(), FONT_PATH);
+
+		newPaint.setTypeface(tf);
+		return newPaint;
+	}
+
+	@Override
+	public void draw(Canvas canvas) {
+
+		canvas.drawText(text, pt.x, pt.y, fontPaint);
+	}
+
+	public void onClick(View arg0) {
+		Log.e("TextObject", "onClick");
+		if (gameListener.isCorrect(this)) {
+//			switchColor();
+		}
+	}
+
+	public void switchColor() {
+		if (curColor == Color.RED)
+			curColor = Color.BLUE;
+		else
+			curColor = Color.RED;
+		fontPaint.setColor(curColor);
+
+	}
+
+}

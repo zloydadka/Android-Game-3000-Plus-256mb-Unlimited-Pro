@@ -1,0 +1,119 @@
+package com.superdeveloperz.supergame;
+
+import android.content.Context;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Paint.Style;
+import android.graphics.Point;
+import android.view.SurfaceHolder;
+
+public class GameManager extends Thread
+{
+    private static final int FIELD_WIDTH = 300;
+    private static final int FIELD_HEIGHT = 250;
+//    private static final String FONT_PATH = "Verdana.ttf";
+    
+    private static final String TEXT = "Пососи мои яйца дружок!";
+   /** Область, на которой будем рисовать */
+    private SurfaceHolder mSurfaceHolder;
+
+    /** Состояние потока (выполняется или нет. Нужно, чтобы было удобнее прибивать поток, когда потребуется) */
+    private boolean mRunning;
+
+    /** Стили рисования */
+    private Paint mPaint;
+
+//    private Pizdarik pizdarik;
+//	private Paint mScorePaint;
+//	private Paint mScorePaint1;
+	private GameModel model;
+	
+//	public void collide(MotionEvent event) {
+//		Log.e("GameManager", "collide");
+//		float rawX = event.getX();
+//		float rawY = event.getY();
+//		Log.e("GameManager", "collide rawX = "+rawX +" rawY = "+rawY+ " pizdarik.pt.x = "+pizdarik.pt.x+ " pizdarik.pt.y "+pizdarik.pt.y);
+//		if(rawX > pizdarik.pt.x && rawX < (pizdarik.pt.x + pizdarik.w)){
+//			if(rawY > pizdarik.pt.y && rawY < (pizdarik.pt.y + pizdarik.h)){
+//				Log.e("GameManager", "collide true");
+//				pizdarik.move(0,10);
+//				//mRunning = false;
+//			}
+//		}
+//		//pizdarik.pt.y = pizdarik.pt.y + 10;
+//		Log.e("GameManager", "collide false");
+//	}
+//    
+    /**
+     * Конструктор
+     * @param surfaceHolder Область рисования
+     * @param context Контекст приложения
+     */
+    public GameManager(SurfaceHolder surfaceHolder, Context context)
+    {
+        mSurfaceHolder = surfaceHolder;
+        mRunning = false;
+
+        mPaint = new Paint();
+        mPaint.setColor(Color.BLUE);
+        mPaint.setStrokeWidth(2);
+        mPaint.setStyle(Style.STROKE);
+        
+//        mScorePaint = createFontPaint(context,20);
+//        mScorePaint1 = createFontPaint(context,10);
+        
+        
+        model = new GameModel();
+        model.addGameObject(new TextObject(context, new Point(20,20), "Пшел нахуй"));
+//        Resources res = context.getResources();
+        
+        
+//        pizdarik = new Pizdarik(res.getDrawable(R.drawable.icon));
+    }
+
+ 
+
+	/**
+     * Задание состояния потока
+     * @param running
+     */
+    public void setRunning(boolean running)
+    {
+        mRunning = running;
+    }
+    
+
+    @Override
+    /** Действия, выполняемые в потоке */
+    public void run()
+    {
+        while (mRunning)
+        {
+            Canvas canvas = null;
+            try
+            {
+                // подготовка Canvas-а
+                canvas = mSurfaceHolder.lockCanvas();
+                synchronized (mSurfaceHolder){
+                	
+                	model.drawModel(canvas);
+                    // собственно рисование
+//                    pizdarik.draw(canvas);
+                   // mScorePaint.setColor(Color.RED);
+                    
+//                    canvas.drawText(String.valueOf("ХУЙ"), mField.centerX(), mField.top - 10, mScorePaint);
+//                    canvas.drawText(String.valueOf("ПИЗДА"), mField.centerX(), mField.bottom + 10, mScorePaint1);
+                }
+            }
+            catch (Exception e) { }
+            finally
+            {
+                if (canvas != null)
+                {
+                    mSurfaceHolder.unlockCanvasAndPost(canvas);
+                }
+            }
+        }
+    }
+}
