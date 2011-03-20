@@ -1,4 +1,4 @@
-#Mon Mar 07 13:15:37 MSK 2011
+#Mon Mar 07 20:33:45 MSK 2011
 content_assist_proposals_foreground=50,50,50
 spelling_locale_initialized=true
 org.eclipse.jdt.ui.text.templates_migrated=true
@@ -16,4 +16,5 @@ content_assist_proposals_background=255,255,255
 content_assist_number_of_computers=13
 useQuickDiffPrefPage=true
 org.eclipse.jdt.ui.text.custom_templates=<?xml version\="1.0" encoding\="UTF-8" standalone\="no"?><templates/>
+content_assist_lru_history=<?xml version\="1.0" encoding\="UTF-8" standalone\="no"?><history maxLHS\="100" maxRHS\="10"><lhs name\="android.os.Parcelable"><rhs name\="android.graphics.Rect"/></lhs><lhs name\="java.util.Random"><rhs name\="java.util.Random"/></lhs><lhs name\="com.superdeveloperz.supergame.GameListener"><rhs name\="com.superdeveloperz.supergame.GameListener"/></lhs><lhs name\="java.lang.Iterable"><rhs name\="java.util.ArrayList"/></lhs><lhs name\="java.util.Collection"><rhs name\="java.util.ArrayList"/></lhs></history>
 org.eclipse.jdt.ui.text.code_templates_migrated=true

@@ -5,6 +5,8 @@ import java.util.Random;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -14,6 +16,7 @@ import android.graphics.Typeface;
 import android.graphics.Paint.Style;
 import android.graphics.Point;
 import android.graphics.PointF;
+import android.util.Log;
 import android.view.SurfaceHolder;
 
 public class GameManager extends Thread {
@@ -41,6 +44,7 @@ public class GameManager extends Thread {
 	private GameListener gameListener;
 	private Paint gameCompletedText;
 	private Bitmap eBlack;
+	private String text;
 
 	// public void collide(MotionEvent event) {
 	// Log.e("GameManager", "collide");
@@ -66,16 +70,16 @@ public class GameManager extends Thread {
 	 *            Область рисования
 	 * @param context
 	 *            Контекст приложения
+	 * @param newText 
 	 */
-	public GameManager(SurfaceHolder surfaceHolder, Context context) {
+	public GameManager(SurfaceHolder surfaceHolder, Context context, String newText) {
 		mSurfaceHolder = surfaceHolder;
 		mRunning = false;
 
-		String[] words = TEXT.split(" ");
+		String[] words = newText.split(" ");
 		model = new GameModel();
 		gameListener = new GameListener(words);
-		
-		
+
 		gameCompletedText = new Paint();
 		gameCompletedText.setTextSize(32);
 		gameCompletedText.setStrokeWidth(1);
@@ -83,27 +87,28 @@ public class GameManager extends Thread {
 		gameCompletedText.setTextAlign(Paint.Align.CENTER);
 		gameCompletedText.setColor(Color.GREEN);
 		gameCompletedText.setAntiAlias(true);
-		Typeface tf = Typeface.createFromAsset(context.getAssets(), "Verdana.ttf");
+		Typeface tf = Typeface.createFromAsset(context.getAssets(),
+				"Verdana.ttf");
 
 		gameCompletedText.setTypeface(tf);
-		//int i = 0;
+		// int i = 0;
 		Random rand = new Random(System.currentTimeMillis());
 		for (String s : words) {
-			//i += 40;
-			int nextX = 1+rand.nextInt(10);
-			int nextY = 1+rand.nextInt(10);
+			// i += 40;
+			int nextX = 1 + rand.nextInt(10);
+			int nextY = 1 + rand.nextInt(10);
 			TextObject object = new TextObject(context, gameListener,
 					new Point(20 * nextX, 20 * nextY), s);
 			model.addGameObject(object);
 			gameListener.addtObject(object);
-			
+
 		}
-		 Resources res = context.getResources();
+		Resources res = context.getResources();
 		eBlack = BitmapFactory.decodeResource(res, R.drawable.black);
 	}
 
 	/**
-	 * Задание состояния потока
+	 * Задание состояния потока text
 	 * 
 	 * @param running
 	 */
@@ -114,18 +119,21 @@ public class GameManager extends Thread {
 	@Override
 	/** Действия, выполняемые в потоке */
 	public void run() {
-		while (mRunning) { 
+		while (mRunning) {
 			Canvas canvas = null;
 			try {
 				// подготовка Canvas-а
 				canvas = mSurfaceHolder.lockCanvas();
 				synchronized (mSurfaceHolder) {
-					if(!gameListener.isCompleted){
-					  model.drawModel(canvas);
-					}else{
+					if (!gameListener.isCompleted) {
+						model.drawModel(canvas);
+					} else {
 						canvas.drawColor(Color.BLACK);
-						canvas.drawBitmap(eBlack, canvas.getWidth()/2, 0,null);
-						canvas.drawText("Пошел на хуй, злодей!", canvas.getWidth()/2, canvas.getHeight()/2, gameCompletedText);
+						canvas.drawBitmap(eBlack, canvas.getWidth() / 2, 0,
+								null);
+						canvas.drawText("Пошел на хуй, злодей!",
+								canvas.getWidth() / 2, canvas.getHeight() / 2,
+								gameCompletedText);
 					}
 				}
 			} catch (Exception e) {
@@ -136,4 +144,5 @@ public class GameManager extends Thread {
 			}
 		}
 	}
+
 }

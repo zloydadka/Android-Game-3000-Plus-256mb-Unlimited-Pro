@@ -16,6 +16,10 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 	 */
 	private SurfaceHolder mSurfaceHolder;
 
+	private final Context context;
+
+	
+
 	/**
 	 * Конструктор
 	 * 
@@ -24,12 +28,12 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 	 */
 	public GameView(Context context, AttributeSet attrs) {
 		super(context, attrs);
+		this.context = context;
 
 		// подписываемся на события Surface
 		mSurfaceHolder = getHolder();
 		mSurfaceHolder.addCallback(this);
-		gm = new GameManager(mSurfaceHolder, context);
-		setOnTouchListener(gm.model);
+		
 	}
 
 	public void surfaceChanged(SurfaceHolder holder, int format, int width,
@@ -67,6 +71,11 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 	        catch (InterruptedException e) { }
 	    }
 		
+	}
+
+	public void setPornoText(String string) {
+		gm = new GameManager(mSurfaceHolder, context,string);
+		setOnTouchListener(gm.model);
 	}
 
 

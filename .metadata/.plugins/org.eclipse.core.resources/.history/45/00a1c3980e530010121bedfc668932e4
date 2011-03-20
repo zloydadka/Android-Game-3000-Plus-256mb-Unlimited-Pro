@@ -1,0 +1,13 @@
+package com.superdeveloperz.supergame;
+
+import android.app.Activity;
+import android.os.Bundle;
+
+public class GameActivity extends Activity{
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Bundle b = getIntent().getExtras();
+        setContentView(R.layout.main);
+    }
+}

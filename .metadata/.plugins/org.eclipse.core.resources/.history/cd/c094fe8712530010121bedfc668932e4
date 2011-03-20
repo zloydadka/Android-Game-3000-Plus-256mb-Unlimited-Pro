@@ -1,0 +1,84 @@
+package com.superdeveloperz.supergame;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
+import android.app.ListActivity;
+import android.content.Context;
+import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
+
+public class StartActivity extends ListActivity {
+	private Map<String, String> bundles;
+
+	public StartActivity() {
+		bundles = new HashMap<String, String>();
+	}
+
+	@Override
+	protected void onCreate(final Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		// savedInstanceState.get(key);
+		ListView listView = getListView();
+
+		final Context context = listView.getContext();
+		SQLiteHelper sqliteHelper = new SQLiteHelper(context);
+		SQLiteDatabase db = sqliteHelper.getWritableDatabase();
+		Cursor query = db.query("TEXTS", new String[] { "name", "text" }, null,
+				null, null, null, null);
+		ArrayList<String> listItem = new ArrayList<String>();
+		if (query.moveToFirst()) {
+			do {
+				String name = query.getString(0);
+				String text = query.getString(1);
+				// Bundle b = new Bundle();
+				// b.putString("text", text);
+				Log.e("moveToNext", String.format("%1$s = %2$s", name, text));
+				bundles.put(name, text);
+				listItem.add(name);
+			} while (query.moveToNext());
+		}
+		if (query != null && !query.isClosed()) {
+			query.close();
+		}
+
+		ArrayAdapter<String> arrAdapter = new ArrayAdapter<String>(context,
+				R.layout.list_item, listItem);
+		setListAdapter(arrAdapter);
+		// Log.e("GameManager.query", "query = " + text);
+		query.close();
+		db.close();
+
+		listView.setOnItemClickListener(new OnItemClickListener() {
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				// When clicked, show a toast with the TextView text
+				// Toast.makeText(getApplicationContext(), ((TextView)
+				// view).getText(),
+				// Toast.LENGTH_SHORT).show();
+				// setContentView(R.layout.main);
+				String name = ((TextView) view).getText().toString();
+				Log.e("setOnItemClickListener", name);
+				String text = bundles.get(name);
+
+				Intent i = new Intent(context, GameActivity.class);
+				savedInstanceState.putString("text", text);
+				// i.putExtras(bundle);
+				context.startActivity(i);
+				// startActivity(GameActivity.);
+			}
+		});
+
+	}
+}

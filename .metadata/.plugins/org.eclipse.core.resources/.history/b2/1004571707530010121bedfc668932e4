@@ -1,0 +1,7 @@
+package com.superdeveloperz.supergame;
+
+import ListActidvity;
+
+public class StartActivity extends ListActivity {
+
+}

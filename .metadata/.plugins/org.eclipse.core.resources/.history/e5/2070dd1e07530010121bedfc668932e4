@@ -1,0 +1,8 @@
+package com.superdeveloperz.supergame;
+
+import android.app.ListActivity;
+
+
+public class StartActivity extends ListActivity {
+
+}
